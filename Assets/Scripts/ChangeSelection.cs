@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ChangeSelection : MonoBehaviour
 {
     public GameObject[] characters;
     public int characterIndex = 0; //initial
-    // Start is called before the first frame update
+    private string playerprefkey="SelectedCharacter";
+    private int selectedCharacterInt;
+    
     void Start()
     {
         //display initial character
@@ -30,5 +33,14 @@ public class ChangeSelection : MonoBehaviour
             characterIndex = characters.Length-1;
         }
         characters[characterIndex].SetActive(true);
+    }
+
+    public void SelectCharacter()
+    {
+        selectedCharacterInt = characterIndex;
+        //Debug.Log(selectedCharacterInt); //works
+        //put in player prefs
+        PlayerPrefs.SetInt(playerprefkey, selectedCharacterInt);
+        SceneManager.LoadScene(0);
     }
 }
