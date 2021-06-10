@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "430366168212",
+    "firebase_url": "https://sifr-f0afe-default-rtdb.firebaseio.com",
+    "project_id": "sifr-f0afe",
+    "storage_bucket": "sifr-f0afe.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:430366168212:android:759b5d0d41d5d5a6759081",
+        "android_client_info": {
+          "package_name": "com.DefaultCompany.Sifr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "430366168212-80ejvbhnuo202hvla0llb36dmqul8961.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZkURRqk069AzMXsqAlXIQA9R7VBt8qps"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "430366168212-80ejvbhnuo202hvla0llb36dmqul8961.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

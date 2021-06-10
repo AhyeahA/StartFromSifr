@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DestryKeyOnCollision : MonoBehaviour
 {
@@ -33,6 +34,8 @@ public class DestryKeyOnCollision : MonoBehaviour
         {
             keyCollected3 = true;
             Destroy(this.gameObject);
+            //call star scene here
+            SceneManager.LoadScene("LevelResults");
         }
 
     }

@@ -36,7 +36,7 @@ public class PlayButtonSound : MonoBehaviour
         if(SpawnBlocksInArea.isPressed == false)
         {
             SpawnBlocksInArea.keyIndex++;
-            Debug.Log("Key Index Value" + SpawnBlocksInArea.keyIndex);
+            Debug.Log("Play Buutton sound Key Index Value" + SpawnBlocksInArea.keyIndex);
             SpawnBlocksInArea.isPressed = true;
         }
         SoundLetterTrigger.soundButtonClicked();

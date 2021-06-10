@@ -5,23 +5,21 @@ using UnityEngine.SceneManagement;
 
 public class LevelButton : MonoBehaviour
 {
-
+    private string prefkeyStr = "levelNum";
     public void ChangeLevel()
     {
         if (this.gameObject.name.Equals("Level1Btn"))
         {
-            SceneManager.LoadScene(0);
+            PlayerPrefs.SetInt(prefkeyStr,1);
         }
         if (this.gameObject.name.Equals("Level2Btn"))
         {
-            SceneManager.LoadScene(0);
+            PlayerPrefs.SetInt(prefkeyStr, 2);
         }
         if (this.gameObject.name.Equals("Level3Btn"))
         {
-            SceneManager.LoadScene(0);
+            PlayerPrefs.SetInt(prefkeyStr, 3);
         }
-
+        SceneManager.LoadScene(2);
     }
-
-    //when clicked, show choose theme? or load the mainFloor scene? 
 }

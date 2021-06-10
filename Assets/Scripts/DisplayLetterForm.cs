@@ -2,17 +2,33 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DisplayLetterForm : MonoBehaviour
 {
     public GameObject[] picArr;
-    int index = 0;
+    private int index = 0;
     List<Texture2D> lPrefabPool = new List<Texture2D>();
     static public string chosenAnswer =  "";
+    static public bool answerSet = false;
     private string word;
+    public static int NumOfQues;
+    public static int NumOfAns;
+
     // Start is called before the first frame update
     void Start()
     {
+        //clear canvas
+        vfxController.CurrentSceneName = SceneManager.GetActiveScene().name;
+        for (int i = 0; i < 3; i++)
+        {
+
+            Debug.Log("Picture Clearing" + picArr[i]);
+            Material m = Resources.Load("New Material") as Material; //TO DO: replace with letter random
+            picArr[i].GetComponent<Renderer>().material = m; //clear canvas
+
+        }
+
         QuestionCreation();
         //add a shared preferences for the themes 
 
@@ -37,9 +53,10 @@ public class DisplayLetterForm : MonoBehaviour
 
     private void QuestionCreation()
     {
-        
-        //te[] aPrefabs = Resources.LoadAll<Texture2D>("Level1Room3Words");
-        
+        Debug.Log("question Creation Called");
+
+            //te[] aPrefabs = Resources.LoadAll<Texture2D>("Level1Room3Words");
+
         Texture2D[] aPrefabs = Resources.LoadAll<Texture2D>("Level1Room3Words");
         int aPrefabsLength = aPrefabs.Length;
         Debug.Log("Question Creation Level 1" + aPrefabs.Length);
@@ -59,8 +76,8 @@ public class DisplayLetterForm : MonoBehaviour
             this.gameObject.GetComponent<Renderer>().material = material;
 
             word = lPrefabPool[randomNumber].name;
-            word = word.Substring(0, (word.Length - 1));
-            string[] letterList = AssetDatabase.FindAssets(word);
+            //word = word.Substring(0, (word.Length - 1));
+            string[] letterList = AssetDatabase.FindAssets(word.Substring(0, (word.Length - 1)));
             foreach (string guid in letterList)
             {
                 //Debug.Log(AssetDatabase.GUIDToAssetPath(guid));
@@ -81,26 +98,115 @@ public class DisplayLetterForm : MonoBehaviour
         }
     }
 
+    static public void checkAnswer()
+    {
+
+    }
+
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log("word" + word);
-        //Debug.Log("كلب".Substring(0,1));
-        //Debug.Log("Chosen Answer" + chosenAnswer);
-        if (chosenAnswer.Contains(word))
+        if(NumOfQues == 2)
         {
-            //clear the materials
-            for(int i = 0; i<3; i++)
+            //set it to num of stars
+            Debug.Log("before calculation num of ques: " + NumOfQues.ToString());
+            Debug.Log("before calculation NumOfAns: " + NumOfAns.ToString());
+            decimal x = (decimal)NumOfQues;
+            decimal y = (decimal)NumOfAns;
+            Debug.Log(y);
+            decimal calculation = (x / y);
+            Debug.Log("calculation  " + calculation);
+            vfxController.CalculatedScore = Mathf.RoundToInt((float)(calculation * 3));
+            Debug.Log("number of stars  " + vfxController.CalculatedScore.ToString());
+
+            NumOfQues = 0;
+            NumOfAns = 0;
+
+            //call star effect scene
+            SceneManager.LoadScene("LevelResults");
+        }
+        if (answerSet)
+        {
+            answerSet = false;
+            if (chosenAnswer.Equals(word))
             {
-                Material m = Resources.Load("New Material") as Material; //TO DO: replace with letter random
-               
-                picArr[i].GetComponent<Renderer>().material = m; //clear canvas
+                Debug.Log("RIGHT ANSWER!");
+                NumOfQues++;
+                NumOfAns++;
+                //clear the materials
+                for (int i = 0; i < 3; i++)
+                {
+                    if (!picArr[i].GetComponent<Renderer>().material.name.Contains("New Material"))
+                    {
+                        if (picArr[i].GetComponent<Renderer>().material.mainTexture.name.Equals(word))
+                        {
+                            Debug.Log("Right answer picture:" + picArr[i]);
+                            Material m = Resources.Load("RightAnsGreen") as Material; //TO DO: replace with letter random
+                            picArr[i].GetComponent<Renderer>().material = m; //clear canvas
+                        }
+                        else
+                        {
+                            Material m = Resources.Load("New Material") as Material; //TO DO: replace with letter random
+                            picArr[i].GetComponent<Renderer>().material = m; //clear canvas
+                        }
+                    }
+                }
+                //if answered wrong decrease score move on to next question?
+                //add score here
+                
+            }
+            else
+            {
+                NumOfAns++;
+                Debug.Log("WRONG ANSWER!");
+                for (int i = 0; i < 3; i++)
+                {
+                    if (!picArr[i].GetComponent<Renderer>().material.name.Contains("New Material"))
+                    {
+                        if (picArr[i].GetComponent<Renderer>().material.mainTexture.name.Equals(chosenAnswer))
+                        {
+                            Debug.Log("Wrong answer picture:" + picArr[i]);
+                            Material m = Resources.Load("WrongAnsRed") as Material; //TO DO: replace with letter random
+                            picArr[i].GetComponent<Renderer>().material = m; //clear canvas
+                        }
+                        else
+                        {
+                            Material m = Resources.Load("New Material") as Material; //TO DO: replace with letter random
+                            picArr[i].GetComponent<Renderer>().material = m; //clear canvas
+                        }
+                    }
+                }
+                
+
             }
             index = 0;
-            QuestionCreation();
-            //if answered wrong decrease score move on to next question?
-            //add score here
+            chosenAnswer = "";
+            StartCoroutine(DelayAction(3));
         }
+        //Debug.Log("word" + word);
+        ////Debug.Log("كلب".Substring(0,1));
+        ////Debug.Log("Chosen Answer" + chosenAnswer);
+        //Debug.Log("Chosen answer:" + chosenAnswer);
+        //if (chosenAnswer.Equals(word))
+        //{
+        //    Debug.Log("RIGHT ANSWER!");
+        //    //clear the materials
+        //    for(int i = 0; i<3; i++)
+        //    {
+        //        Material m = Resources.Load("New Material") as Material; //TO DO: replace with letter random
 
+        //        picArr[i].GetComponent<Renderer>().material = m; //clear canvas
+        //    }
+        //    index = 0;
+        //    QuestionCreation();
+        //    //if answered wrong decrease score move on to next question?
+        //    //add score here
+        //}
+        //Debug.Log("WRONG ANSWER!");
+    }
+    IEnumerator DelayAction(float delayTime) //used to delay getting the next question
+    {
+        yield return new WaitForSeconds(delayTime);
+        QuestionCreation();
     }
 }

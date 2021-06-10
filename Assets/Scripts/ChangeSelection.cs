@@ -38,9 +38,7 @@ public class ChangeSelection : MonoBehaviour
     public void SelectCharacter()
     {
         selectedCharacterInt = characterIndex;
-        //Debug.Log(selectedCharacterInt); //works
-        //put in player prefs
         PlayerPrefs.SetInt(playerprefkey, selectedCharacterInt);
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(3); //go to choose mode screen
     }
 }

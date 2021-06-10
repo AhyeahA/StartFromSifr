@@ -4,5 +4,68 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/ChooseCharacter.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/ChooseLevel.unity
+    guid: 75c614547e4a64048b6545b53d9b7a1e
+  - enabled: 1
+    path: Assets/Scenes/ChooseTheme.unity
+    guid: cc86e49f75fe38749a9daa3ce0eda0e5
+  - enabled: 1
+    path: Assets/Scenes/MainFloor.unity
+    guid: b6479fdc67f79f040a51b595b1c53692
+  - enabled: 1
+    path: Assets/Scenes/Room Scenes/Level 1 Rooms/Level 1 Room 1.unity
+    guid: 72b2fa46025c2394893d365de8a3d9c3
+  - enabled: 1
+    path: Assets/Scenes/Room Scenes/Level 1 Rooms/Level 1 Room 2.unity
+    guid: 4ce8105e59e03f148a17a919a296e1ca
+  - enabled: 1
+    path: Assets/Scenes/Room Scenes/Level 1 Rooms/Level 1 Room 3.unity
+    guid: 67a6e4cd99f4e2f4ca1e4652cecaabc7
+  - enabled: 1
+    path: Assets/Scenes/Room Scenes/Level 2/Level 2 Room 1.unity
+    guid: 5ba7256a23765d1479afa4646984659c
+  - enabled: 1
+    path: Assets/Scenes/Room Scenes/Level 2/Level 2 Room 2.unity
+    guid: 06d7986925d818d45b8f0b74009d536e
+  - enabled: 1
+    path: Assets/Scenes/Room Scenes/Level 2/Level 2 Room 3.unity
+    guid: 9711f95a87c7aa54da88e104e6e438e6
+  - enabled: 1
+    path: Assets/Scenes/Room Scenes/Level 3/Level 3 Room 1.unity
+    guid: 3bc1703230afcb644bef21c9b529acc9
+  - enabled: 1
+    path: Assets/Scenes/Room Scenes/Level 3/Level 3 Room 2.unity
+    guid: 36f7da9b40fafa94f8437e25d9654316
+  - enabled: 1
+    path: Assets/Scenes/Room Scenes/Level 3/Level 3 Room 3.unity
+    guid: 56d7aa9b78fbe8640a1cf58ffa42abbd
+  - enabled: 1
+    path: Assets/Scenes/ChooseMode.unity
+    guid: cb11816be24f872459f7b3654c43178a
+  - enabled: 1
+    path: Assets/Scenes/Main Menu.unity
+    guid: eaa87f3199ac50248bec94e8c79ed3bf
+  - enabled: 1
+    path: Assets/Scenes/LogReg.unity
+    guid: 473aa986914c8e04ba98356394c2521f
+  - enabled: 1
+    path: Assets/Scenes/Login.unity
+    guid: 656fdbbb76770514180865cdc6954184
+  - enabled: 1
+    path: Assets/Scenes/Register.unity
+    guid: ba3b16f1d0466c24bb903459cd934339
+  - enabled: 1
+    path: Assets/Scenes/Classroom.unity
+    guid: a81040e7d13aeda42a7f2d0c5550ce65
+  - enabled: 1
+    path: Assets/Scenes/Settings.unity
+    guid: 2de9af27fa8b6e445bb053e930a5046d
+  - enabled: 1
+    path: Assets/Scenes/LevelResults.unity
+    guid: 2adbd666b1e04124c99615c11ef0ad9b
   m_configObjects: {}

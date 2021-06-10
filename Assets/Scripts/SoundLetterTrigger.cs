@@ -15,6 +15,9 @@ public class SoundLetterTrigger : MonoBehaviour
     public GameObject goSpawn;
     static public bool spwneffect = false;
     static public bool checkMatch = false;
+    private bool hasCollidedL2R1 = false;
+    private bool hasCollidedL2R2 = false;
+
 
     private void Start()
     {
@@ -41,8 +44,8 @@ public class SoundLetterTrigger : MonoBehaviour
 
     private void OnCollisionEnter(Collision other)
     {
-        //add effect when colliding instead of deleteing object
-        if (SceneManager.GetActiveScene().buildIndex == 1) //level 1 room 1
+        //add effect when colliding instead of deleting object
+        if (SceneManager.GetActiveScene().buildIndex == 4) //level 1 room 1
         {
             Debug.Log("Colliding");
             if (other.collider.gameObject.tag == "Player" && !audioSource.isPlaying)
@@ -54,7 +57,7 @@ public class SoundLetterTrigger : MonoBehaviour
                 PlayButtonSound.characterInProximity(false);
             }
         }
-        else if (SceneManager.GetActiveScene().buildIndex == 2) //level 1 room 2
+        else if (SceneManager.GetActiveScene().buildIndex == 5) //level 1 room 2
         {
             Debug.Log("Colliding2");
             if (other.collider.gameObject.tag == "Player" && RadioTrigger.radioTriggered)
@@ -67,16 +70,48 @@ public class SoundLetterTrigger : MonoBehaviour
                 RadioTrigger.radioTriggered = false;
             }
         }
-        else  //level 2 room 1 - NEED TO CHANGE BASED ON SCENE MANAGER
+        else if (SceneManager.GetActiveScene().name.Equals("Level 2 Room 1")) //level 2 room 1 - NEED TO CHANGE BASED ON SCENE MANAGER
         {
-            Debug.Log("Colliding Level 2 room 1");
             if (other.collider.gameObject.tag == "Player")
             {
-                Debug.Log("Has been collided with player");
-                if (SpawnObject.checkCorrectAnswer(this.gameObject)) 
-                    SpawnObject.Destroy(this.gameObject); //has been changed
-                else
-                    new SpawnObject().NextQuestion();
+                Debug.Log("Level 2 Room 1 SoundLetterTrigger: " + GetComponent<AudioSource>().clip.name.Split('.')[1].Substring(1).ToCharArray()[0]);
+                if (!hasCollidedL2R1)
+                {
+                    //what does this part do?
+                    bool value = SpawnObject.checkCorrectAnswer(this.gameObject);
+                    if (value)
+                    {
+                        Destroy(Instantiate(effectobj, this.gameObject.transform.position, Quaternion.identity),5f);
+                        hasCollidedL2R1 = true;
+                        Debug.Log("replace with effect"); //has been changed
+                    }
+
+                    else
+                    {
+                        Debug.Log("incorrect");
+                    }
+                }                    
+            }
+        }
+        else if (SceneManager.GetActiveScene().name.Equals("Level 2 Room 2")) //level 2 room 2
+        {
+            if (other.collider.gameObject.tag == "Player")
+            {
+                Debug.Log("block audio source first letter:" + audioSource.clip.name.Split('.')[1].Substring(1).ToCharArray()[0]);
+                if (!hasCollidedL2R2)
+                {
+                    bool value = WordPronunciationRadio.L2R2checkCorrectAnswer(this.gameObject);
+                    if (value)
+                    {
+                        Destroy(Instantiate(effectobj, this.gameObject.transform.position, Quaternion.identity), 5f);
+                        hasCollidedL2R2 = true;
+                        Debug.Log("replace with effect"); //has been changed
+                    }
+                    else
+                    {
+                        WordPronunciationRadio.wrongAnsbool = true;
+                    }
+                }
             }
         }
     }
@@ -105,8 +140,20 @@ public class SoundLetterTrigger : MonoBehaviour
             Debug.Log("keyIndex" + SpawnBlocksInArea.keyIndex);
             checkMatch = true;
             SpawnBlocksInArea.keyIndex++;
-            
+            //score here?
+            //increase score
+            SpawnBlocksInArea.StudentScore += 1;
+            Debug.Log("True SloundLetter StudentScore:" + SpawnBlocksInArea.StudentScore);
+
         }
+        else
+        {
+            SpawnBlocksInArea.StudentScore += 1;
+            Debug.Log("wrong answer");
+            Debug.Log(" False SoundLetter StudentScore:" + SpawnBlocksInArea.StudentScore);
+        }
+        
+        
         checkMatch = false;
     }
         

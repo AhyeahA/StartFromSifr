@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
 
 public class SpawnBlocksInArea : MonoBehaviour
 {
@@ -21,15 +23,19 @@ public class SpawnBlocksInArea : MonoBehaviour
     static public AudioSource objAudioSource;
     private GameObject[] Room2Letters;
     public float keyCenterpos;
-
+    public static int StudentScore;
+    private int StarRatio = 1;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (SceneManager.GetActiveScene().buildIndex == 1)
+        Debug.Log("Start KeIndex" + keyIndex);
+        vfxController.CurrentSceneName = SceneManager.GetActiveScene().name;
+        if (SceneManager.GetActiveScene().buildIndex == 4)
             InvokeRepeating("SpawnLetterBlocks", 0, 15f);
-        else if (SceneManager.GetActiveScene().buildIndex == 2)
+        else if (SceneManager.GetActiveScene().buildIndex == 5) //level 1 room 2
         {
+            keyIndex = 0;
             Room2Letters = new GameObject[3];
             SpawnRand3Blocks();
         }
@@ -38,12 +44,27 @@ public class SpawnBlocksInArea : MonoBehaviour
 
     private void Update()// Update is called once per frame
     {
+        
         if (keyIndex == 5 && keyCreated)
         {
+            Debug.Log("Check If start key already shows" + keyIndex);
             Instantiate(keyObj, new Vector3(-3.82f, keyCenterpos, -0.11f), Quaternion.identity);
             Instantiate(shinyEffect, new Vector3(-3.82f, keyCenterpos, -0.11f), Quaternion.identity);
             keyCreated = false;
+            Debug.Log("before calculation StudentScore: " + StudentScore.ToString());
+            Debug.Log("before calculation KeyIndex: " + keyIndex.ToString());
+            decimal x = (decimal) keyIndex;
+            decimal y = (decimal) StudentScore;
+            Debug.Log(y);
+            decimal calculation = (x/ y);
+            Debug.Log("calculation  " + calculation);
+            StarRatio = Mathf.RoundToInt((float)(calculation * 3));
+            Debug.Log("number of stars  " + StarRatio.ToString());
+            vfxController.CalculatedScore = StarRatio;
             keyIndex = 0;
+            //maybe if assest mode add new script to add to firebase
+            StudentScore = 0; //reset score
+
 
         }
 
@@ -63,10 +84,11 @@ public class SpawnBlocksInArea : MonoBehaviour
 
     public void SpawnLetterBlocks()
     {
-        Vector3 pos = center + new Vector3(Random.Range(-size.x / 2, size.x / 2), Random.Range(-size.x / 2, size.x / 2), Random.Range(-size.x / 2, size.x / 2));
+
+        Vector3 pos = center + new Vector3(Random.Range(-size.x / 2, size.x / 2), UnityEngine.Random.Range(-size.x / 2, size.x / 2), Random.Range(-size.x / 2, size.x / 2));
         if (index < 28)
         {
-            Destroy(Instantiate(LettersPrefabs[Random.Range(0, 27)], pos, Quaternion.identity), 15f);
+            Destroy(Instantiate(LettersPrefabs[UnityEngine.Random.Range(0, 27)], pos, Quaternion.identity), 15f);
             isPressed = false;
         }
         else

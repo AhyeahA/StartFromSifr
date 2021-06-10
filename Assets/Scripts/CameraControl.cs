@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 public class CameraControl : MonoBehaviour //for LEVEL 1 ROOM 3 (first person controller)
 {
-
     public float speed;
     public ControlButtons frontBtn, backBtn, rightBtn,leftBtn, rotateLeftBtn, rotateRightBtn, selectBtn;
+    private string collidedPic;
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +19,7 @@ public class CameraControl : MonoBehaviour //for LEVEL 1 ROOM 3 (first person co
 
     void Update()
     {
+
         if (rightBtn.isPressed)
         {
             transform.Translate(new Vector3(speed * Time.deltaTime, 0, 0));
@@ -54,6 +56,30 @@ public class CameraControl : MonoBehaviour //for LEVEL 1 ROOM 3 (first person co
         {
            // isPressed = false;
         }
+    }
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        if(SceneManager.GetActiveScene().name.Equals("Level 1 Room 3"))
+        {
+            Debug.Log(collision.gameObject.GetComponent<Renderer>().material.name);
+            if(!collision.gameObject.GetComponent<Renderer>().material.name.Contains("New Material"))
+            {
+                
+            collidedPic = collision.gameObject.GetComponent<Renderer>().material.mainTexture.name;
+            
+            Debug.Log("collidePic"+ collidedPic);
+            }
+            
+        }
+            
+            
+    }
+
+    public void selectL1R3()
+    {
+        DisplayLetterForm.chosenAnswer = collidedPic;
+        DisplayLetterForm.answerSet = true;
     }
 
     /*
